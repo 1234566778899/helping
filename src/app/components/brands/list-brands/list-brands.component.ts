@@ -1,9 +1,9 @@
-import { Brand } from './../../../models/brand';
 import { Component } from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import { BrandService } from '../../../services/brand.service';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmarEliminarComponent } from '../../confirmaciones/confirmar-eliminar/confirmar-eliminar.component';
+import { CampaignService } from '../../../services/campaign.service';
+import { Campaign } from '../../../models/Campaign';
 
 @Component({
   selector: 'app-list-brands',
@@ -12,64 +12,48 @@ import { ConfirmarEliminarComponent } from '../../confirmaciones/confirmar-elimi
 })
 export class ListBrandsComponent {
 
-  dsBrands = new MatTableDataSource<Brand>();
-  displayedColumns:string[]=['id','logo','name','country','fundationYear','antiguedad','active','opciones'];
+  dsCampaigns = new MatTableDataSource<Campaign>();
+  displayedColumns: string[] = ['campName', 'description', 'moneyGoal', 'startDate', 'endDate', 'options'];
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dsBrands.filter = filterValue.trim().toLowerCase();
+    this.dsCampaigns.filter = filterValue.trim().toLowerCase();
   }
 
-  constructor(private brandService: BrandService, private dialog: MatDialog ) {}
+  constructor(private campaignService: CampaignService, private dialog: MatDialog) { }
 
-  ngOnInit(){
-    this.cargarBrands();
+  ngOnInit() {
+    this.cargarCampaigns();
   }
 
-  eliminarBrand(id:number){
-    
+  eliminarBrand(id: number) {
+
     let dialogRef = this.dialog.open(ConfirmarEliminarComponent);
-    
+
     dialogRef.afterClosed().subscribe(
-    respuestaSeleccionada=> {
-      if (respuestaSeleccionada) {
-        this.brandService.deleteBrand(id).subscribe({
-          next:(data) => {
-            this.cargarBrands();
-          },
-          error: (err)=>  {
-            console.log(err);
-          }
-        })
-      }      
-    }      
+      respuestaSeleccionada => {
+        if (respuestaSeleccionada) {
+          this.campaignService.deleteCampaign(id).subscribe({
+            next: (data) => {
+              this.cargarCampaigns();
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          })
+        }
+      }
     )
   }
 
-  calculaAntiguedad(fundationYear: number){
-    return new Date().getFullYear()-fundationYear;
-  }
-
-  cargarBrands() {
-
-    //dsBrands = this.brandService.getBrands();
-
-    this.brandService.getBrands().subscribe({
-      next: (data:Brand[]) => {
-        
-
-        data.forEach((brand:Brand)=>{
-          brand.logo = "data:image/jpeg;base64," + brand.logo;
-        })
-
-        this.dsBrands = new MatTableDataSource(data);
+  cargarCampaigns() {
+    this.campaignService.getCampaigns().subscribe({
+      next: (data: Campaign[]) => {
+        this.dsCampaigns = new MatTableDataSource(data);
       },
-      error: (err)=>  {
+      error: (err) => {
         console.log(err);
       }
     })
-
   }
-
-
 }

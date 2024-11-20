@@ -6,11 +6,11 @@ import { User } from '../../models/user';
 import { Token } from '../../models/token';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
-export class LoginComponent {
+export class RegisterComponent {
   loginForm!: FormGroup;
   hayError: boolean = false;
 
@@ -39,7 +39,7 @@ export class LoginComponent {
 
     this.userService.login(user).subscribe({
       next: (data: Token) => {
-        this.router.navigate(["/campaign-list"]);
+        this.router.navigate(["/home"]);
       },
       error: (err) => {
         this.hayError = true;

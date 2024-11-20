@@ -5,16 +5,17 @@
         src="https://w7.pngwing.com/pngs/936/173/png-transparent-volunteering-computer-icons-charitable-organization-seaquest-utah-exchange-student-hand-logo-volunteering.png"
         alt="Helping Hand Logo" class="logo" />
       <ul>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#plans">Planes</a></li>
-        <li><a href="#contact">Contactanos</a></li>
-        <li><button class="btn-download">Descargar</button></li>
+        <li class="mt-2"><a href="#features">Features</a></li>
+        <li class="mt-2"><a href="#plans">Planes</a></li>
+        <li class="mt-2"><a href="#contact">Contactanos</a></li>
+        <li><button [routerLink]="'/login'"
+            mat-raised-button>Iniciar sesión</button></li>
       </ul>
     </nav>
   </header>
 
-  <section class="hero">
-    <h1>Más de 100 campañas de donación<br />te esperan este 2024</h1>
+  <section class="hero bg-red-200">
+    <h1 class>Más de 100 campañas de donación<br />te esperan este 2024</h1>
     <button class="btn-primary">Únete ahora</button>
   </section>
 
@@ -98,9 +99,12 @@
   <section id="contact" class="contact mt-5">
     <h2 class="mt-5">Contáctanos</h2>
     <form>
-      <input type="text" placeholder="Escribe tu mensaje" required />
-      <input type="email" placeholder="Correo electrónico" required />
-      <button type="submit">Enviar</button>
+      <input type="text" placeholder="Escribe tu mensaje" required
+        class="py-2 px-2 rounded" />
+      <input type="email" class="p-2 rounded" placeholder="Correo electrónico"
+        required />
+      <button type="submit"
+        class="py-4 bg-gray-700 text-white rounded">Enviar</button>
     </form>
   </section>
 
